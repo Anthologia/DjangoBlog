@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+
+        .detail_buttons{
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Detail Page</h1>
+
+    <h3 >제목 : {{blog.title}}</h3>
+
+    <hr>
+
+    <p>{{blog.pub_date}}</p>
+
+    <p>{{blog.body}}</p>
+
+    <div class="detail_buttons">
+        <a href="{% url 'edit' blog.id %}">수정하기</a>
+        <a href="{% url 'delete' blog.id %}">삭제하기</a>
+        <a href="{% url 'home' %}">Home으로</a>
+    </div>
+
+</body>
+
+</html>

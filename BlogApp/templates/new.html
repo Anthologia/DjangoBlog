@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% load static %}
+
+    <h1>새 글 작성하기</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        <table>
+            {{form.as_table}}
+        </table>
+
+        <input class="btn btn-dark" type="submit" value="저장">
+
+    </form>
+
+</body>
+
+</html>

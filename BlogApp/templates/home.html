@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+
+        div{
+            background-color:lightsalmon;
+            
+        }
+
+        .title{
+            text-align: center;
+        
+        }
+
+        .title_list{
+            text-align: center;
+        }
+
+        .date_list{
+            text-align: right;
+        }
+
+    </style>
+</head>
+
+<body>
+    {% load static %}
+
+    <h1 class="title">Blog Project</h1>
+
+    <img src="{% static 'KakaoTalk_Photo_2020-05-25-01-58-10.jpeg' %}" alt="">
+    <a href="{% url 'new' %}">새글 작성하기</a>
+
+    <div>
+        {% for blog in blogs %}
+        <hr>
+        <div class="title_list">{{blog.title}}</div>
+        <br>
+        <div class="date_list">{{blog.pub_date}}</div>
+        <br>
+        {{blog.summary}}
+        <br>
+        {% if blog.image %}
+        <img src="{{blog.image.url}}">
+        {% endif %}
+
+        <a href="{% url 'detail' blog.id %}">더보기</a>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>
