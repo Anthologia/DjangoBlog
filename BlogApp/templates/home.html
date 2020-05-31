@@ -40,6 +40,31 @@
     <a href="{% url 'new' %}">새글 작성하기</a>
 
     <div>
+        {% if user.is_authenticated %}
+            <h3>안녕하세요 {{user.username}}님</h3>
+            {{user.birthday}}
+            {{user.gender}}
+            <a href="{% url 'logout' %}"></a>
+        {%endif%}
+        <a href="{% url 'login' %}"></a>
+        <a href="{% url 'register' %}"></a>
+
+    </div>
+    
+    <div>
+        {% if user.is_authenticated %}
+            <h3>안녕하세요. {{user.username}}님으로 로그인 되었습니다.</h3>
+            {{user.birthday}}
+            {{user.gender}}
+        {% else %}
+        <a href="{% url 'login' %}"></a>
+        <a href="{% url 'logout' %}"></a>
+        <a href="{% url 'register' %}"></a>
+        {% endif %}
+    </div>
+
+
+    <div>
         {% for blog in blogs %}
         <hr>
         <div class="title_list">{{blog.title}}</div>

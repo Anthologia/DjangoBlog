@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/django,python
-# Edit at https://www.gitignore.io/?templates=django,python
+# Created by https://www.gitignore.io/api/venv,django,python,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=venv,django,python,visualstudiocode
 
 ### Django ###
 *.log
@@ -166,4 +166,28 @@ dmypy.json
 
 # Pyre type checker
 
-# End of https://www.gitignore.io/api/django,python
+### venv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+pyvenv.cfg
+.env
+.venv
+env/
+myvenv/
+ENV/
+env.bak/
+venv.bak/
+pip-selfcheck.json
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.gitignore.io/api/venv,django,python,visualstudiocode
