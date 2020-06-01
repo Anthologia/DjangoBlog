@@ -10,24 +10,23 @@
             background-color: burlywood;
         }
 
-        div{
-            background-color:lightsalmon;
-            
+        div {
+            background-color: lightsalmon;
+
         }
 
-        .title{
+        .title {
             text-align: center;
-        
+
         }
 
-        .title_list{
+        .title_list {
             text-align: center;
         }
 
-        .date_list{
+        .date_list {
             text-align: right;
         }
-
     </style>
 </head>
 
@@ -42,27 +41,13 @@
     <div>
         {% if user.is_authenticated %}
             <h3>안녕하세요 {{user.username}}님</h3>
-            {{user.birthday}}
+            {{user.birhday}}
             {{user.gender}}
-            <a href="{% url 'logout' %}"></a>
-        {%endif%}
-        <a href="{% url 'login' %}"></a>
-        <a href="{% url 'register' %}"></a>
-
-    </div>
-    
-    <div>
-        {% if user.is_authenticated %}
-            <h3>안녕하세요. {{user.username}}님으로 로그인 되었습니다.</h3>
-            {{user.birthday}}
-            {{user.gender}}
-        {% else %}
-        <a href="{% url 'login' %}"></a>
-        <a href="{% url 'logout' %}"></a>
-        <a href="{% url 'register' %}"></a>
+            <a href="{% url 'logout' %}">로그아웃</a>
         {% endif %}
+        <a href="{% url 'login' %}">로그인</a>
+        <a href="{% url 'register' %}">회원가입</a>
     </div>
-
 
     <div>
         {% for blog in blogs %}

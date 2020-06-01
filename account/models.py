@@ -8,5 +8,5 @@ class CustomUserModel(AbstractUser):
         ("W", "여자"),
     )
 
-    birhday = models.DateField(blank=True, null=True)  # 둘 다 True인 경우 -> 로그인에 상관이 없는 경우
+    birthday = models.DateField(blank=True, null=True)  # 둘 다 True인 경우 -> 로그인에 상관이 없는 경우
     gender = models.CharField(max_length=2, blank=True, null=True, choices=GENDER)

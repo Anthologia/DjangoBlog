@@ -13,10 +13,11 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("/")
-                # home 이야기하나?
+            else:
+                return HttpResponse('로그인 실패. 다시 시도 해보세요.')
     else:
         form = LoginForm()
-    return render(request, "account.html", {"form":form})
+        return render(request, "account.html", {"form":form})
 
 def logout_view(request):
     logout(request)
