@@ -1,16 +1,57 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Blog    # Blog class를 import
+from .models import * 
 from django.utils import timezone
 from .forms import BlogForm
 
 # Create your views here.
 def home(request):
     blogs = Blog.objects.all()
-    return render(request, 'home.html', {'blogs':blogs})
+
+    for blog in blogs:
+        like_num = len(blog.like.all())
+        if blog.like.filter(username = request.user):
+            liker = request.user
+        else:
+            liker = blog.like.last()
+    
+    return render(request, 'home.html', {'blogs':blogs,'likes':like_num, 'liker':liker})
 
 def detail(request, blog_id):
     blog = get_object_or_404(Blog, pk = blog_id)
-    return render(request, 'detail.html', {'blog':blog})
+    like_num = len(blog.like.all())
+    if blog.like.filter(username = request.user):
+        liker = request.user
+    else:
+        liker = blog.like.last()
+    comments = Comment.objects.filter(blog=blog)
+    return render(request, 'detail.html', {'blog':blog, 'comments':comments, 'likes':like_num, 'liker':liker})
+
+def commenting(request, blog_id):
+    new_comment = Comment()
+    new_comment.blog = get_object_or_404(Blog, pk = blog_id)
+    new_comment.author = request.user
+    new_comment.body = request.POST.get('body')
+    new_comment.save()
+    return redirect('/blog/' + str(blog_id))
+
+def deletingcomment(request, comment_id):
+    delete_comment = get_object_or_404(Comment, pk = comment_id)
+    delete_comment.delete()
+    return redirect('/blog/' + str(delete_comment.blog.id))
+    
+
+def like(request, blog_id):
+    blog = get_object_or_404(Blog, pk = blog_id)
+    blog.like.add(request.user)
+    blog.save()
+    # save 하나 안하나 똑같은 거 같은데 왜 하지?
+    return redirect('/blog/' + str(blog_id))
+
+def unlike(request, blog_id):
+    blog = get_object_or_404(Blog, pk = blog_id)
+    blog.like.remove(request.user)
+    blog.save()
+    return redirect('/blog/' + str(blog_id))
 
 def new(request):
     # 1. 데이터가 입력된 후 제출 버튼을 누르고 데이터 저장 = POST

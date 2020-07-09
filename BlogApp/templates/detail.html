@@ -1,38 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Detail Page</title>
     <style>
-        body {
-            background-color: burlywood;
-        }
 
-        .detail_buttons{
-            text-align: right;
-        }
     </style>
 </head>
 
 <body>
-    <h1>Detail Page</h1>
+    {% include 'navbar.html' %}
 
-    <h3 >제목 : {{blog.title}}</h3>
+    
 
-    <hr>
+    
+    <div class="card">
+        <br>
+        <h3 class = "card-title" style="text-align: center;">제목 : {{blog.title}}</h3>
+        <hr>
+        <div class="card-body">
+            <div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <form action="/blog/like/{{blog.id}}" method="get">
+                        <button type="submit" class="btn btn-primary" style="width: 6rem;" >LIKE</button>
+                    </form>
+                    <form action="/blog/unlike/{{blog.id}}" method="get">
+                        <button type="submit" class="btn btn-secondary" style="width: 6rem;" >UNLIKE</button>
+                    </form>
+                </div>
+                {% if likes > 1 %}
+                {{liker}}님 외 {{likes|add:"-1"}}명이 좋아합니다.
+                <!-- likes와 "-1" 두 값을 정수화시켜서 연산할 수 있도록 도와준다 -->
+                {% elif likes == 1 %}
+                {{liker}}님이 좋아합니다.
+                {%else%}
+                아직 이 글에 좋아요를 누른 사람이 없습니다.
+                {% endif %}
+            </div>
 
-    <p>{{blog.pub_date}}</p>
+            <p style="text-align: right;">{{blog.pub_date}}</p>
 
-    <p>{{blog.body}}</p>
+            <p>{{blog.body}}</p>
 
-    <div class="detail_buttons">
-        <a href="{% url 'edit' blog.id %}">수정하기</a>
-        <a href="{% url 'delete' blog.id %}">삭제하기</a>
-        <a href="{% url 'home' %}">Home으로</a>
+            <div class="detail_buttons" style="text-align: right;">
+                <a href="{% url 'edit' blog.id %}" class="btn btn-outline-primary">수정하기</a>
+                <a href="{% url 'delete' blog.id %}" class="btn btn-outline-danger">삭제하기</a>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            {% for comment in comments %}
+            <small class="text-muted">
+                <br>작성자 : {{comment.author}}
+                <br> 내용 : {{comment.body}}
+                <br> {{comment.pub_date}}
+                <form action="/blog/deletingcomment/{{comment.id}}" method="get">
+                    <button type="submit" class="btn btn-outline-secondary">삭제</button>
+                </form>
+                <hr>
+            </small>
+            {% endfor %}
+        </div>
     </div>
+
+    <form action="/blog/commenting/{{blog.id}}" method="POST">
+        {%csrf_token%}
+        <!-- <input type="text" name="body"> -->
+        <textarea name="body" id="" cols="30" rows="10"></textarea>
+        <button type="submit">작성</button>
+    </form>
+
 
 </body>
 
 </html>
+{% endblock %}

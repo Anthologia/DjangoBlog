@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,24 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {
-            background-color: burlywood;
-        }
+
     </style>
 </head>
 
 <body>
     <h1>글 수정하기</h1>
 
-    <form action="{% url 'update' blog.id %}" method="POST">
-        {%csrf_token%}
-        제목 : <input type="text" value="{{blog.title}}" name=title>
-        <br>
-        본문 : <textarea name="body" id="" cols="30" rows="10">{{blog.body}}</textarea>
-        <button type="submit">작성!</button>
+    <div class="card">
+        <div class="card-body" style="text-align: center;">
+        <form action="{% url 'update' blog.id %}" method="POST">
+            {%csrf_token%}
+            제목 : <input type="text" value="{{blog.title}}" name=title>
+            <br>
+            본문 : <textarea name="body" id="" cols="30" rows="10">{{blog.body}}</textarea>
+            <button type="submit">작성!</button>
 
-    </form>
+        </form>
+        </div>
+    </div>
 
 </body>
 
 </html>
+{% endblock %}

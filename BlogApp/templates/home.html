@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,66 +9,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {
-            background-color: burlywood;
-        }
-
-        div {
-            background-color: lightsalmon;
-
-        }
-
-        .title {
+        .card {
             text-align: center;
-
-        }
-
-        .title_list {
-            text-align: center;
-        }
-
-        .date_list {
-            text-align: right;
+            width: auto;
+            margin: 1rem 5rem 1rem 5rem;
         }
     </style>
 </head>
 
 <body>
-    {% load static %}
 
-    <h1 class="title">Blog Project</h1>
+    {% load static %}
+    {% include 'navbar.html' %}
 
     <img src="{% static 'KakaoTalk_Photo_2020-05-25-01-58-10.jpeg' %}" alt="">
     <a href="{% url 'new' %}">새글 작성하기</a>
 
     <div>
-        {% if user.is_authenticated %}
-            <h3>안녕하세요 {{user.username}}님</h3>
-            {{user.birhday}}
-            {{user.gender}}
-            <a href="{% url 'logout' %}">로그아웃</a>
-        {% endif %}
-        <a href="{% url 'login' %}">로그인</a>
-        <a href="{% url 'register' %}">회원가입</a>
-    </div>
-
-    <div>
         {% for blog in blogs %}
-        <hr>
-        <div class="title_list">{{blog.title}}</div>
-        <br>
-        <div class="date_list">{{blog.pub_date}}</div>
-        <br>
-        {{blog.summary}}
-        <br>
-        {% if blog.image %}
-        <img src="{{blog.image.url}}">
-        {% endif %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{blog.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{blog.pub_date}}</h6>
+                {{blog.summary}}
+                <br>
+                {% if blog.image %}
+                <img src="{{blog.image.url}}">
+                {% endif %}
 
-        <a href="{% url 'detail' blog.id %}">더보기</a>
+                <a href="{% url 'detail' blog.id %}" class="card-link">더보기</a>
+            </div>
+            <!-- <div class="card-footer"> 이 부분은 차후 수정해보는 걸루
+                <small class="text-muted">
+                    {% if likes > 1 %}
+                    {{liker}}님 외 {{likes|add:"-1"}}명이 좋아합니다.
+                {% elif likes == 1 %}
+                    {{liker}}님이 좋아합니다.
+                {%else%}
+                    아직 이 글에 좋아요를 누른 사람이 없습니다.
+                {% endif %}
+                </small>
+            </div> -->
+        </div>
         {% endfor %}
     </div>
 
 </body>
 
 </html>
+{%endblock%}
